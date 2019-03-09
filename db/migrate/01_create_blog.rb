@@ -8,6 +8,8 @@ class CreateBlog < ActiveRecord::Migration[5.2]
       t.string    :title,         null: false
       t.string    :slug,          null: false
       t.integer   :layout_id
+      t.integer   :hero_file_id
+      t.text      :teaser
       t.text      :content_cache, limit: LIMIT
       t.integer   :year,          null: false, limit: 4
       t.integer   :month,         null: false, limit: 2

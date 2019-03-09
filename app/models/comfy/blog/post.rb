@@ -13,6 +13,10 @@ class Comfy::Blog::Post < ActiveRecord::Base
   belongs_to :site,
     class_name: "Comfy::Cms::Site"
 
+  belongs_to :hero_image,
+          class_name: "Comfy::Cms::File",
+          foreign_key: :hero_file_id
+
   # -- Validations -------------------------------------------------------------
   validates :title, :slug, :year, :month,
     presence: true
