@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.version     = ComfyBlog::VERSION
   s.authors     = ["Oleg Khabarov"]
   s.email       = ["oleg@khabarov.ca"]
-  s.homepage    = "http://github.com/comfy/comfy-blog"
+  s.homepage    = "http://github.com/open2view/comfy-blog"
   s.summary     = "Simple Blog Engine for ComfortableMexicanSofa"
   s.description = "Simple Blog Engine for ComfortableMexicanSofa"
   s.license     = "MIT"

@@ -9,17 +9,28 @@ class Comfy::Blog::Post < ActiveRecord::Base
 
   cms_has_revisions_for :fragments_attributes
 
+  VARIANT_IMAGES = {
+    560 => {
+      resize: '560x376^',
+      gravity: 'center',
+      crop: '560x376+0+0'
+    },
+    1600 => {
+      resize: '1600x1056^',
+      gravity: 'center',
+      crop: '1600x1056+0+0'
+    }
+  }
+
   # -- Relationships -----------------------------------------------------------
-  belongs_to :site,
-    class_name: "Comfy::Cms::Site"
+  belongs_to :site, class_name: "Comfy::Cms::Site"
 
   belongs_to :hero_image,
           class_name: "Comfy::Cms::File",
           foreign_key: :hero_file_id
 
   # -- Validations -------------------------------------------------------------
-  validates :title, :slug, :year, :month,
-    presence: true
+  validates :title, :slug, :year, :month, presence: true
   validates :slug,
     uniqueness: { scope: %i[site_id year month] },
     format:     { with: %r{\A%*\w[a-z0-9_%-]*\z}i }
@@ -41,8 +52,15 @@ class Comfy::Blog::Post < ActiveRecord::Base
     [site.url(relative: relative), post_path].join
   end
 
-protected
+  def hero_thumb_variant
+    hero_image.attachment.variant(VARIANT_IMAGES[560])
+  end
 
+  def hero_1600_variant
+    hero_image.attachment.variant(VARIANT_IMAGES[1600])
+  end
+
+protected
   def set_slug
     self.slug ||= title.to_s.parameterize
   end
@@ -55,5 +73,4 @@ protected
   def set_published_at
     self.published_at ||= Time.zone.now
   end
-
 end
